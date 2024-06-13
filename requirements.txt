@@ -1,5 +1,0 @@
-lxml
-numpy
-pandas
-Unidecode
-requests
