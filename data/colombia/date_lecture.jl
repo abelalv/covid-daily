@@ -14,4 +14,7 @@ data=data[21:end,:]
 # Plot the total cases infeted 
 
 
-data[:,1]=DateTime.(data[:,1],dateformat"yyyy-mm-dd HH:MM:SS")
+data[:,1]=DateTime.(data[:,1])
+scatter(data.Date,data[:,2])
+
+data
