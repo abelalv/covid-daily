@@ -4,6 +4,7 @@ using DataFrames
 using Dates
 using Plots
 using DifferentialEquations
+using NeuralPDE, Lux, Plots, OrdinaryDiffEq, Distributions, Random
 # Specify the file path
 file_path = "/home/user/Documents/Github/covid-daily/colombia/coronavirus-cases-linear.csv"
 
@@ -39,28 +40,25 @@ function sir_model(u, p, t)
 end
 
 
-# Define the SIR model
-function sir_model!(du, u, p, t)
-    S, I, R = u
-    β, γ = p
-    N = S + I + R
-    du[1] = -β * S * I / N
-    du[2] = β * S * I / N - γ * I
-    du[3] = γ * I
-end
+# initial-value problem.
+u0 = [1.0, 1.0]
+p = [1.5, 1.0, 3.0, 1.0]
+tspan = (0.0, 4.0)
+prob = ODEProblem(lotka_volterra, u0, tspan, p)
+
 N=5e7
 I0=1
 R0=0
 # Set initial conditions and parameters
-initial_conditions = [N - I0, I0, R0]
+u0= [N - I0, I0, R0]
 parameters = [β, γ]
 
 # Set up the time span
-tspan = (start_date, end_date)
+tspan = (0.0, 100.0)
 
-# Solve the ODE
-solution = solve(sir_model!, initial_conditions, tspan, parameters)
+# Solve the ODE g
 
+prob = ODEProblem(lotka_volterra, u0, tspan, p)
 # Plot the results
 plot(solution, xlabel="Date", ylabel="Population", label=["Susceptible" "Infected" "Recovered"])
 
