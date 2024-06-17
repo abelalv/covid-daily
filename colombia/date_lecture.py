@@ -85,6 +85,6 @@ plt.title('SIR Model Simulation')
 plt.legend()
 plt.show()
 
-
+aqui
 ##
 # %%
